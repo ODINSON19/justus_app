@@ -134,18 +134,50 @@ else:
     # 🎂 BIRTHDAY PAGE FOR HER 🎂
     # Only show this if it's HER email
     if email == "ananyamukundan900@gmail.com" and 'birthday_seen' not in st.session_state:
-        st.markdown("<h1 style='font-size: 60px;'>🎂 Happy Birthday My Love! ❤️</h1>", unsafe_allow_html=True)
-        st.image("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtY2J6ZnB5eGl5aDdtY2J6ZnB5eGl5aDdtY2J6ZnB5eGl5aDdtY2J6ZnB5eGl5aCZlcD12MV9naWZzX3NlYXJjaCZN/l4pTfx2qLSznwEdTu/giphy.gif", use_column_width=True)
+        
+        # Override the container style just for this view to be dark
+        st.markdown("""
+        <style>
+        .block-container {
+            background-color: rgba(0, 0, 0, 0.85) !important;
+            color: white !important;
+            border: 2px solid #ff69b4;
+            box-shadow: 0 0 20px #ff69b4;
+        }
+        h1, h2, h3, p, div {
+            color: white !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<h1 style='font-size: 60px; text-shadow: 2px 2px #ff0055;'>🎂 Happy Birthday My Love! ❤️</h1>", unsafe_allow_html=True)
+        
+        # Display "Image 2" for the birthday page
+        # Check for various extensions since user just said "image 2"
+        birthday_img_path = None
+        for ext in ["jpeg", "jpg", "png", "gif"]:
+            if os.path.exists(f"image2.{ext}"):
+                birthday_img_path = f"image2.{ext}"
+                break
+        
+        if birthday_img_path:
+            st.image(get_img_with_href(birthday_img_path), use_container_width=True)
+        else:
+            # Fallback if image2 is missing
+            st.image("https://media1.tenor.com/m/2roX3uxz_68AAAAC/cat-love.gif", use_container_width=True)
         
         st.markdown("""
-        ### My Everything 💖
-        
-        Happy birthday my everything! You are my life, my soul, and you make me feel alive and happy. 
-        I love the way you are and I love the way you look at me. 
-        When I am with you, it feels like it is **Us vs The World**.
-        
-        So I call this... **Just Us**. ❤️
-        """)
+        <div style='text-align: center; font-size: 1.2rem; line-height: 1.6;'>
+            <h3>My Everything 💖</h3>
+            <p>
+            Happy birthday my everything! You are my life, my soul, and you make me feel alive and happy.<br>
+            I love the way you are and I love the way you look at me.<br>
+            When I am with you, it feels like it is <b>Us vs The World</b>.
+            </p>
+            <br>
+            <p style='font-size: 1.5rem; font-weight: bold;'>So I call this... Just Us. ❤️</p>
+        </div>
+        """, unsafe_allow_html=True)
         
         if st.button("Enter Our World 🌍✨"):
             st.session_state['birthday_seen'] = True

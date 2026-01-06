@@ -1,0 +1,19 @@
+body {
+    background: linear-gradient(to bottom, #ffd1dc, #ffffff);
+}
+
+h1, h2, h3 {
+    color: #ff4d88;
+    text-align: center;
+}
+
+button {
+    background-color: #ff69b4 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+}
+
+input {
+    border-radius: 10px !important;
+}
