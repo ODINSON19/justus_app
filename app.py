@@ -18,16 +18,48 @@ st.set_page_config(
     layout="centered"
 )
 
+# Determine if we are on Cloud or Local to handle db connection more robustly
+# (Streamlit Cloud uses st.secrets, Local uses .env)
+if not os.getenv("DB_HOST"):
+    # If not in env (local), try to load from st.secrets (cloud)
+    # This happens automatically if we use standard st.secrets access, 
+    # but our db_config.py uses os.getenv. 
+    # So we can manually inject secrets into env for compatibility.
+    if "DB_HOST" in st.secrets:
+        os.environ["DB_HOST"] = st.secrets["DB_HOST"]
+        os.environ["DB_PORT"] = st.secrets["DB_PORT"]
+        os.environ["DB_NAME"] = st.secrets["DB_NAME"]
+        os.environ["DB_USER"] = st.secrets["DB_USER"]
+        os.environ["DB_PASSWORD"] = st.secrets["DB_PASSWORD"]
+
 # Initialize Database on Startup
 if 'db_initialized' not in st.session_state:
     if init_db():
         st.session_state['db_initialized'] = True
     else:
-        st.error("Connection to Database Failed. Please check .env settings.")
+        st.warning("Could not connect to database. Check .env or Secrets.")
 
-# Load CSS
-with open("assets/hearts.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# Load CSS (Embedded directly to avoid FileNotFoundError)
+st.markdown("""
+<style>
+body {
+    background: linear-gradient(to bottom, #ffd1dc, #ffffff);
+}
+h1, h2, h3 {
+    color: #ff4d88;
+    text-align: center;
+}
+button {
+    background-color: #ff69b4 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+}
+input {
+    border-radius: 10px !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ---------------- APP ----------------
 st.title("💖 Just Us")
