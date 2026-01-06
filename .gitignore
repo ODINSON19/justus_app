@@ -1,0 +1,20 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Streamlit
+.streamlit/
+secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# User Uploads (Don't check in personal photos by default, usually)
+# However, for this specific app, the user might want them?
+# Let's start by looking at what's in 'photos/uploads'
+# If it's empty, we should keep the dir but ignore content.
+photos/uploads/*
+!photos/uploads/.gitkeep

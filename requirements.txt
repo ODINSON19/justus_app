@@ -1,0 +1,5 @@
+streamlit
+pillow
+psycopg2-binary
+python-dotenv
+streamlit-calendar
